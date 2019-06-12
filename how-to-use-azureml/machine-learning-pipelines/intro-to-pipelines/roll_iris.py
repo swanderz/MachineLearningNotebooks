@@ -1,3 +1,5 @@
+# force re-run
+#force it again!
 import findspark as fs
 from pprint import pprint
 import numpy as np
@@ -57,7 +59,7 @@ file_location = os.path.join(args.input_dir, 'iris.csv')
 
 df = spark \
     .read.format("com.databricks.spark.csv") \
-    .option("delimiter", "\,") \
+    .option("delimiter", ",") \
     .option("inferSchema", "true") \
     .option("header", "true") \
     .load(file_location)
