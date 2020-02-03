@@ -102,9 +102,7 @@ if __name__ == "__main__":
         print("Found workspace {} at location {}".format(ws.name, ws.location))
         dataset = Dataset.get_by_name(workspace=ws, name='Diabetes')
     elif args.remote_run is True:
-        print("run details:\n", run.get_details())
-        print("input_datasets:\n", list(run.input_datasets))
-        dataset = run.input_datasets['dsIM']
+        dataset = run.input_datasets['is_there_under__score_limit']
     else:
         raise Exception('remote_run unknown value. The value was: {}'.format(args.remote_run))
 
