@@ -11,11 +11,13 @@ parser = argparse.ArgumentParser("train")
 
 parser.add_argument("--input_data", type=str, help="input data")
 parser.add_argument("--output_train", type=str, help="output_train directory")
+parser.add_argument("--test", type=str, help="test")
 
 args = parser.parse_args()
 
 print("Argument 1: %s" % args.input_data)
 print("Argument 2: %s" % args.output_train)
+print("special test argument: %s" % args.test)
 
 if not (args.output_train is None):
     os.makedirs(args.output_train, exist_ok=True)
