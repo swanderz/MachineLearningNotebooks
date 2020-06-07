@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import matplotlib
 from matplotlib import pyplot as plt
+plt.switch_backend('agg')
+
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.ticker import NullFormatter
 from collections import OrderedDict
