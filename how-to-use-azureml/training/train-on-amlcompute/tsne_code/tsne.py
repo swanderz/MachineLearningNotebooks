@@ -1,12 +1,11 @@
 # Author: Jake Vanderplas -- <vanderplas@astro.washington.edu>
 
-print(__doc__)
-
 from collections import OrderedDict
 from functools import partial
 from time import time
 
 import matplotlib.pyplot as plt
+import pandas as pd
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.ticker import NullFormatter
 
@@ -17,7 +16,7 @@ from azureml.core import Run
 from gensim import __version__ as gsversion
 from sklearn import __version__ as skversion
 from scipy import __version__ as spversion
-
+from pandas import __version__ as pdversion
 from numpy import __version__ as npversion
 
 print(f"Azure ML version: {amlversion}")
@@ -25,6 +24,7 @@ print(f"gensim version: {gsversion}")
 print(f"sklearn version: {skversion}")
 print(f"scipy version: {spversion}")
 print(f"numpy version: {npversion}")
+print(f"pandas version: {pdversion}")
 
 
 # Next line to silence pyflakes. This import is needed.
@@ -50,16 +50,25 @@ LLE = partial(manifold.LocallyLinearEmbedding,
               n_neighbors, n_components, eigen_solver='auto')
 
 methods = OrderedDict()
-methods['LLE'] = LLE(method='standard')
-methods['LTSA'] = LLE(method='ltsa')
-methods['Hessian LLE'] = LLE(method='hessian')
-methods['Modified LLE'] = LLE(method='modified')
-methods['Isomap'] = manifold.Isomap(n_neighbors, n_components)
-methods['MDS'] = manifold.MDS(n_components, max_iter=100, n_init=1)
-methods['SE'] = manifold.SpectralEmbedding(n_components=n_components,
-                                           n_neighbors=n_neighbors)
+# methods['LLE'] = LLE(method='standard')
+# methods['LTSA'] = LLE(method='ltsa')
+# methods['Hessian LLE'] = LLE(method='hessian')
+# methods['Modified LLE'] = LLE(method='modified')
+# methods['Isomap'] = manifold.Isomap(n_neighbors, n_components)
+# methods['MDS'] = manifold.MDS(n_components, max_iter=100, n_init=1)
+# methods['SE'] = manifold.SpectralEmbedding(n_components=n_components,
+#                                            n_neighbors=n_neighbors)
 methods['t-SNE'] = manifold.TSNE(n_components=n_components, init='pca',
                                  random_state=0)
+
+Y = methods['t-SNE'].fit_transform(X)
+
+df_subset = pd.DataFrame()
+
+df_subset['tsne-2d-one'] = tsne_results[:,0]
+df_subset['tsne-2d-two'] = tsne_results[:,1]
+
+print(df_subset.head())
 
 run = Run.get_context()
 
