@@ -61,12 +61,14 @@ methods['SE'] = manifold.SpectralEmbedding(n_components=n_components,
 methods['t-SNE'] = manifold.TSNE(n_components=n_components, init='pca',
                                  random_state=0)
 
+run = Run.get_context()
+
 # Plot results
 for i, (label, method) in enumerate(methods.items()):
     t0 = time()
     Y = method.fit_transform(X)
     t1 = time()
-    print("%s: %.2g sec" % (label, t1 - t0))
+    run.log(label, "%.2g sec" % (t1 - t0))
     ax = fig.add_subplot(2, 5, 2 + i + (i > 3))
     ax.scatter(Y[:, 0], Y[:, 1], c=color, cmap=plt.cm.Spectral)
     ax.set_title("%s (%.2g sec)" % (label, t1 - t0))
@@ -74,6 +76,6 @@ for i, (label, method) in enumerate(methods.items()):
     ax.yaxis.set_major_formatter(NullFormatter())
     ax.axis('tight')
 
-run = Run.get_context()
+
 
 run.log_image(name="results", plot=plt)
