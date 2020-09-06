@@ -1,17 +1,18 @@
 # Copyright (c) Microsoft. All rights reserved.
 # Licensed under the MIT license.
 import os
+import joblib
 
-from azureml.core.run import Run
+from interpret.ext.glassbox import LGBMExplainableModel
+from automl.client.core.common.constants import MODEL_PATH
 from azureml.core.experiment import Experiment
 from azureml.core.dataset import Dataset
-from azureml.train.automl.runtime.automl_explain_utilities import AutoMLExplainerSetupClass, \
-    automl_setup_model_explanations, automl_check_model_if_explainable
-from azureml.explain.model.mimic.models.lightgbm_model import LGBMExplainableModel
-from azureml.explain.model.mimic_wrapper import MimicWrapper
-from azureml.automl.core.shared.constants import MODEL_PATH
-from azureml.explain.model.scoring.scoring_explainer import TreeScoringExplainer
-import joblib
+from azureml.core.run import Run
+from azureml.interpret.mimic_wrapper import MimicWrapper
+from azureml.interpret.scoring.scoring_explainer import TreeScoringExplainer
+from azureml.train.automl.runtime.automl_explain_utilities import automl_setup_model_explanations, \
+    automl_check_model_if_explainable
+
 
 OUTPUT_DIR = './outputs/'
 os.makedirs(OUTPUT_DIR, exist_ok=True)
