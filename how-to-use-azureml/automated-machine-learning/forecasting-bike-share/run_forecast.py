@@ -1,37 +1,32 @@
-from azureml.core import Environment
-from azureml.core.conda_dependencies import CondaDependencies
-from azureml.train.estimator import Estimator
-from azureml.core.run import Run
+from azureml.core import ScriptRunConfig
 
 
-def run_rolling_forecast(test_experiment, compute_target, train_run, test_dataset,
-                         target_column_name, inference_folder='./forecast'):
-    condafile = inference_folder + '/condafile.yml'
+def run_rolling_forecast(test_experiment, compute_target, train_run,
+                         test_dataset, target_column_name,
+                         inference_folder='./forecast'):
     train_run.download_file('outputs/model.pkl',
                             inference_folder + '/model.pkl')
-    train_run.download_file('outputs/conda_env_v_1_0_0.yml', condafile)
 
-    inference_env = Environment("myenv")
-    inference_env.docker.enabled = True
-    inference_env.python.conda_dependencies = CondaDependencies(
-        conda_dependencies_file_path=condafile)
+    inference_env = train_run.get_environment()
 
-    est = Estimator(source_directory=inference_folder,
-                    entry_script='forecasting_script.py',
-                    script_params={
-                        '--target_column_name': target_column_name
-                    },
-                    inputs=[test_dataset.as_named_input('test_data')],
-                    compute_target=compute_target,
-                    environment_definition=inference_env)
+    config = ScriptRunConfig(source_directory=inference_folder,
+                             script='forecasting_script.py',
+                             arguments=['--target_column_name',
+                                        target_column_name,
+                                        '--test_dataset',
+                                        test_dataset.as_named_input(test_dataset.name)],
+                             compute_target=compute_target,
+                             environment=inference_env)
 
-    run = test_experiment.submit(est,
-                                 tags={
-                                     'training_run_id': train_run.id,
-                                     'run_algorithm': train_run.properties['run_algorithm'],
-                                     'valid_score': train_run.properties['score'],
-                                     'primary_metric': train_run.properties['primary_metric']
-                                 })
+    run = test_experiment.submit(config,
+                                 tags={'training_run_id':
+                                       train_run.id,
+                                       'run_algorithm':
+                                       train_run.properties['run_algorithm'],
+                                       'valid_score':
+                                       train_run.properties['score'],
+                                       'primary_metric':
+                                       train_run.properties['primary_metric']})
 
     run.log("run_algorithm", run.tags['run_algorithm'])
     return run

@@ -21,6 +21,10 @@ The following tutorials are intended to provide an introductory overview of Azur
 | [Deploy an image classification model](https://docs.microsoft.com/azure/machine-learning/tutorial-deploy-models-with-aml) | Deploy a scikit-learn image classification model to Azure Container Instances. | [img-classification-part2-deploy.ipynb](image-classification-mnist-data/img-classification-part2-deploy.ipynb) | Image Classification | Scikit-Learn
 | [Deploy an encrypted inferencing service](https://docs.microsoft.com/azure/machine-learning/tutorial-deploy-models-with-aml) |Deploy an image classification model for encrypted inferencing in Azure Container Instances | [img-classification-part3-deploy-encrypted.ipynb](image-classification-mnist-data/img-classification-part3-deploy-encrypted.ipynb) | Image Classification | Scikit-Learn
 | [Use automated machine learning to predict taxi fares](https://docs.microsoft.com/azure/machine-learning/tutorial-auto-train-models) | Train a regression model to predict taxi fares using Automated Machine Learning. | [regression-part2-automated-ml.ipynb](regression-automl-nyc-taxi-data/regression-automated-ml.ipynb) | Regression | Automated ML 
+| Azure ML in 10 minutes (Compute instance required) |Learn how to run an image classification model, track model metrics, and deploy a model in 10 minutes. | [quickstart-azureml-in-10mins.ipynb](compute-instance-quickstarts/quickstart-azureml-in-10mins/quickstart-azureml-in-10mins.ipynb) | Image Classification | Scikit-Learn |
+| Get started with Azure ML Job Submission (Compute instance required) |Learn how to use the Azure Machine Learning Python SDK to submit batch jobs. | [quickstart-azureml-python-sdk.ipynb](compute-instance-quickstarts/quickstart-azureml-python-sdk/quickstart-azureml-python-sdk.ipynb) | Image Classification | Scikit-Learn |
+| Get started with Automated ML (Compute instance required) | Learn how to use Automated ML for Fraud classification. | [quickstart-azureml-automl.ipynb](compute-instance-quickstarts/quickstart-azureml-automl/quickstart-azureml-automl.ipynb) | Classification | Automated ML |
+
 
 ## Advanced Samples
 
